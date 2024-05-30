@@ -16,7 +16,7 @@ gen date_m = monthly(substr(date, 1, 7), "YM")
 format date_m %tm
 tsset date_m
 tsline fedfunds
-graph export "q1_a_fedfunds.pdf",   replace
+// graph export "q1_a_fedfunds.pdf",   replace
 
 
 
@@ -26,7 +26,7 @@ gen date_m = monthly(substr(date, 1, 7), "YM")
 format date_m %tm
 tsset date_m
 tsline unrate
-graph export "q1_a_unrate.pdf",   replace
+// graph export "q1_a_unrate.pdf",   replace
 
 
 
@@ -38,7 +38,7 @@ gen date_m = monthly(substr(date, 1, 7), "YM")
 format date_m %tm
 tsset date_m
 tsline gdpdft
-graph export "q1_a_gdpdft.pdf",   replace
+// graph export "q1_a_gdpdft.pdf",   replace
 
 
 
@@ -107,7 +107,7 @@ tsset date_q
 var gdpdft unrate fedfunds, lags(1/4)
 irf create q1_b_var_irf, set(q1_b_var_irf, replace) step(20) replace
 irf graph oirf, impulse(gdpdft unrate fedfunds) response(gdpdft unrate fedfunds) byopts(yrescale)
-graph export "q1_b_var_irf.pdf",   replace
+// graph export "q1_b_var_irf.pdf",   replace
 
 /* d */
 matrix A = (.,0,0 \ .,.,0 \ .,.,.)
@@ -116,13 +116,13 @@ matrix B = (1,0,0 \ 0,1,0 \ 0,0,1)
 svar gdpdft unrate fedfunds, lags(1/4) aeq(A) beq(B)
 irf create q1_d_svar_irf, set(q1_d_svar_irf, replace) step(20) replace
 irf graph sirf, irf(q1_d_svar_irf) impulse(gdpdft unrate fedfunds) response(gdpdft unrate fedfunds) byopts(yrescale)
-graph export "q1_d_svar_irf.pdf",   replace
+// graph export "q1_d_svar_irf.pdf",   replace
 	
 /* f */
 * residuals: monetary shock
 predict resid_monetary, residuals equation(fedfunds)
 tsline resid_monetary, graphregion(fcolor(white)) 
-graph export "q1_f_monetary_shock.pdf",   replace
+// graph export "q1_f_monetary_shock.pdf",   replace
 	
 ****************
 ** Question 2 **
@@ -144,7 +144,7 @@ var gdpdft unrate fedfunds, lags(1/8)  exog(L(0/12).resid_full)
 
 irf create q2_b_var_irf, set(q2_b_var_irf, replace) step(20) replace
 irf graph dm, impulse(resid_full) irf(q2_b_var_irf)
-graph export "q2_b_var_irf.pdf",   replace
+// graph export "q2_b_var_irf.pdf",   replace
 
 /* c */
 
@@ -154,7 +154,7 @@ matrix B = (1,0,0,0 \ 0,1,0,0 \ 0,0,1,0 \ 0,0,0,1)
 svar resid_full gdpdft unrate fedfunds, lags(1/4) aeq(A) beq(B)
 irf create q2_c_svar, set(q2_c_svar) step(20) replace
 	
-irf graph sirf, irf(q2_c_svar) impulse(resid_full gdpdft unrate fedfunds) response(resid_full gdpdft unrate fedfunds) byopts(yrescale)
+irf graph sirf, irf(q2_c_svar) impulse(resid_full gdpdft unrate fedfunds) response(resid_full gdpdft unrate fedfunds) // byopts(yrescale)
 graph export "q2_c_svar_irf.pdf",   replace
 
 
