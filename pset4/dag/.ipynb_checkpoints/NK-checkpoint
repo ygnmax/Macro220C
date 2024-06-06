@@ -1,0 +1,18 @@
+// Model DAG
+digraph {
+	center=true ratio=auto
+	exog [label=exogenous shape=box]
+	unknowns [label=unknowns shape=box]
+	targets [label=targets shape=diamond]
+	0 [label="central_bank [0]"]
+	exog -> 0 [label=v]
+	unknowns -> 0 [label=pi]
+	1 [label="nkpc [1]"]
+	exog -> 1 [label=yflex]
+	unknowns -> 1 [label=pi]
+	2 [label="mkt_clearing [2]"]
+	unknowns -> 2 [label=pi]
+	2 -> targets [label=euler]
+	1 -> 2 [label=y]
+	0 -> 2 [label=i]
+}
